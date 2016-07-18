@@ -21,9 +21,9 @@
 		Google组建了一个独立的小组全职开发Go语言,在服务中逐步增加对Go语言的支持(GAE Google AppEngine)
 		
 	主要作者:
-	Ken Thompson:http://en.wikipedia.org/wiki/Ken_Thompson 设计了B语言和C语言,创建了Unix和Plan 9操作系统,1983年图灵奖得主,Go语言共同作者
-	Rob Pike:http://en.wikipedia.org/wiki/Rob_Pike Unix小组的成员,参与Plan 9和Inferno操作系统,参与Limbo和Go语言的研发,《Unix编程环境》作者之一
+	[Ken Thompson](http://en.wikipedia.org/wiki/Ken_Thompson): 设计了B语言和C语言,创建了Unix和Plan 9操作系统,1983年图灵奖得主,Go语言共同作者
+	[Rob Pike]:(http://en.wikipedia.org/wiki/Rob_Pike) Unix小组的成员,参与Plan 9和Inferno操作系统,参与Limbo和Go语言的研发,《Unix编程环境》作者之一
 	Robert Griesemer:曾协助制作Java和HotSpot编译器和Chrome浏览器的JavaScript引擎V8
-	Russ Cox:http://swtch.com/~rsc/ 参与Plan 9操作系统的开发,Google Code Search项目负责人
+	[Russ Cox](http://swtch.com/~rsc/): 参与Plan 9操作系统的开发,Google Code Search项目负责人
 	Ian Lance Taylor:GCC社区的活跃任务,gold连接器和GCC过程间优化LTO的主要设计者,Zembu公司创始人
-	Brad Fitzpatrick:http://en.wikipedia.org/wiki/Brad_Fitzpatrick LiveJournal的创始人,memcached作者
+	[Brad Fitzpatrick](http://en.wikipedia.org/wiki/Brad_Fitzpatrick): LiveJournal的创始人,memcached作者
