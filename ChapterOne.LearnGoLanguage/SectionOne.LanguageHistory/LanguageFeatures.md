@@ -86,10 +86,102 @@ type Bired struct{
 
 通过在函数调用前使用关键字`go`,我们即可让该函数以`goroutine`方式执行.
 	`goroutine`是一种比线程更佳轻盈、更省资源的`协程`.
->Go语言通过系统的线程来多路派遣这些函数的执行,使得每个用`go`关键字执行的函数可以运行成为一个单位协程.当一个协程阻塞的时候，调度起就会自动把其他协程安排到另外的线程中去执行,从而实现了程序无等待并行化运行.而且调度的开销非常小,一颗CPU调度的规模不下于每秒百万次，这使得能够创建大量的`goroutine`,从而可以很轻松的便携高并发程序.
+>Go语言通过系统的线程来多路派遣这些函数的执行,使得每个用`go`关键字执行的函数可以运行成为一个单位协程.当一个协程阻塞的时候，调度起就会自动把其他协程安排到另外的线程中去执行,从而实现了程序无等待并行化运行.而且调度的开销非常小,一颗CPU调度的规模不下于每秒百万次，这使得能够创建大量的`goroutine`,从而可以很轻松的编写高并发程序.
+
+>Go语言实现了CSP(通信顺序进程,Communicating Sequential Process)模型来作为`goroutine`间的推荐通信方式,在CSP模型中,一个并发系统由若干并行运行的顺序进程组成,每个进程不能对其他进行的变量赋值.进程间职能通过一对通信原语实现协作.Go语言用`channel(通道)`这个概念来轻巧地实现了CSP模型.
+
+`channel(通道)`的使用方式比较接近UNIX系统中管道(pipe)的概念,可以方便地进行跨`goroutine`的通信
+
+>由于一个进程内创建的所有goroutine运行在同一个内存地址空间中,因此如果不通的`goroutine`不得不去访问共享的内存变量，访问前应该先获得相应的读写锁.Go语言标准库中的`sync`包提供了完备的读写锁功能。
+
+```go
+package main
+
+import "fmt"
+
+func sum(values [] int,resultChan chan int){
+	sum := 0
+	for _, value := range values{
+		sum += value
+	}
+	resultChan <- sum  //将计算结果发送到channel中
+}
+
+func main (){
+	values := [] int{1,2,3,4,5,6,7,8,9,10}
+
+	resultChan := make(chan int,2)
+	go sum(values[:len(values)/2],resultChan)
+	go sum(values[len(values)/2:],resultChan)
+	sum1,sum2 := <-resultChan, <- resultChan //接收结果
+
+	fmt.Println("Result:",sum1,sum2,sum1+sum2)
+}
+```
+
+###1.2.8 反射
+通过反射(reflection)可以获取对象类型的详细信息，并可动态操作对象。虽功能强大单代码可读性并不理想。若非必要，不推荐使用反射.**详情请见第九章.**
+
+>Go语言的反射实现了反射的大部分功能，但没有内置类型工厂，故而无法做到像Java那样通过类型字符串创建对象实例。Go语言不推荐通过读取配置并根据类型名称创建对应的类型.
+
+反射最常见的使用使用场景是做对象的序列化(serialization,有时候也叫做Marshal &Unmarshal).
+
+>Go语言标准库的encoding/json、encoding/xml、encoding/gob、encoding/binary等包就大量依赖于反射功能来实现
+
+```go
+package main
+
+import(
+	"fmt"
+	"reflect"
+)
+
+type Bird struct{
+	Name string
+	LifeExpectance int
+}
+
+func (b *Bird) Fly(){
+	fmt.Println("I am flying...")
+}
+
+func main(){
+	sparrow := &Bird("Sparrow",3)
+	s:=reflect.ValueOf(sparrow).Elem()
+	typeOfT := s.Type()
+	for i:=0;i<s.NumField();i++{
+		f:=s.Field(i)
+		fmt.Printf("%d: %s %s = %v \n",i,typeOfT.Field(i).Name,f.Type(),f.Interface())
+	}
+}
+```
+
+###1.2.9 语言交互性
+由于Go语言与C语言之间的天生联系,Go语言的设计者自然不会忽略如何重用现有C模块的问题，这个功能直接被命名为Cgo.Cgo即是语言特性,同时也是一个工具的名称.**详情请见第九章**
+
+在Go代码中,可以按Cgo的特定语法混合编写C语言代码,然后Cgo工具可以将这些混合C代码提取并生成对于C功能的调用包装代码.开发者基本上可以完全忽略这个Go语言和C语言的边界是如何跨越的.
+
+与Java中的JNI不通,Cgo的用法非常简单,下面代码演示如何在Go中调用C语言标准库的puts函数.
+
+```go
+package main
+
+/*
+#include <stdio.h>
+#include <stdlib.h>
+*/
+import "c"
+import "unsage"
 
 
-	
+func main(){
+	cstr:=C.CString("Hello,world")
+	C.puts(cstr)
+	C.free(unsafe.Pointer(cstr))
+}
+
+```
+
 	
 	
 	
