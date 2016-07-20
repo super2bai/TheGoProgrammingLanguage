@@ -20,8 +20,13 @@
 		
     开源方式发布,BSD授权协议.任何人可以查看Go语言的所有源代码,并可以为Go语言发展贡献自己的力量。
     Google组建了一个独立的小组全职开发Go语言,在服务中逐步增加对Go语言的支持(GAE Google AppEngine)
-		
+
+
+----------
+
+
 **主要作者:**
+
 [Ken Thompson](http://en.wikipedia.org/wiki/Ken_Thompson): 设计了B语言和C语言,创建了Unix和Plan 9操作系统,1983年图灵奖得主,Go语言共同作者.
 
 [Rob Pike](http://en.wikipedia.org/wiki/Rob_Pike): Unix小组的成员,参与Plan 9和Inferno操作系统,参与Limbo和Go语言的研发,《Unix编程环境》作者之一
