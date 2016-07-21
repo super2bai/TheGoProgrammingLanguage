@@ -114,3 +114,147 @@ value3:=complex(3.2,12) //value3结果同value2
 
 ###2.3.5 字符串
 >在Go语言中，字符串也是一种基本类型。
+```go
+var str string
+str = "Hello, 世界" //字符串赋值
+ch := str[0]        //取字符串的第一个字符
+len(str)			//获取字符串长度
+var str1 ="你好"
+str + str1			//字符串连接
+
+	
+	fmt.Println("根据长度遍历")
+	for i := 0; i < len(str); i++ {
+		s := str[i] //依据下标取字符串中的字符，类型为byte
+		fmt.Println(i, s)
+		/**
+		0 72
+		1 101
+		2 108
+		3 108
+		4 111
+		5 44
+		6 32
+		7 228
+		8 184
+		9 150
+		10 231
+		11 149
+		12 140
+		*/
+	}
+	fmt.Println("以Unicode字符遍历")
+	for i, ch := range str {
+		fmt.Println(i, ch)
+		/**
+		0 72
+		1 101
+		2 108
+		3 108
+		4 111
+		5 44
+		6 32
+		7 19990
+		10 30028
+		*/
+	}
+
+//其他操作请见标准库strings包
+```
+
+**UTF-8中，中文字符占3个字节**
+
+**以Unicode字符方式遍历时，每个字符的类型是rune（早期的Go语言用int类型表示Unicode字符），而不是byte**
+>字符串的内容可以用数组下标的方式获取**字符串的内容不能在初始化后被修改**
+
+>Go编译器支持UTF-8的源代码文件格式，如果包含非ANSI字符，保存源文件时编码格式必须选择UFT-8。
+
+
+>Go语言支持UTF-8和Unicode编码，对于其他编码，可以基于iconv库用Cgo包装一个，[开源项目](https://github.com/xushiwei/go-iconv)
+
+###2.3.6 字符类型
+>Go中支持两个字符类型，`byte`(实际上是`uint8`的别名)，代表UTF-8字符串的单个字节的值；`rune`，代表单个Unicode字符
+
+>`rune`操作查阅Go标准库的unicode包。`unitcode/uft8`包也提供了UFT-8和Unicode之间的转换.
+
+>出于简化语言的考虑，Go语言的多数API都假设字符串为UFT-8编码。尽管Unicode字符在标准库有支持，但实际使用较少
+
+###2.3.7 数组
+>数组是Go中最常用的数据结构之一。是指一系列同一类型数据的集合。数组中包含的每个数据被称为数组元素（element），一个数组包含的元素个数被称为数组长度。
+```go
+var a [32]byte                    //长度为32的数组，每个元素为一个字节
+//编译通不过，暂时注释
+//var b [2 * N]struct{ x, y int32 } //复杂类型数组	
+var c [1000]*float64              //指针数组
+var d [3][5]int                   //二维数组,三行五列,15个元素
+var e [2][2][2]float64            //等同于[2]([2]([2]float64))
+
+len(a)							  //获得数组长度
+```
+**Go中，数组长度在定义后就不可更改，在声明时长度可以为一个常量或者一个常量表达式（在编译器即可计算结果的表达式）***
+
+######1. 元素访问
+```go
+arr := [5]int{1, 2, 3, 4, 5}
+
+for i := 0; i < len(arr); i++ {
+	fmt.Println(i, arr[i])
+}
+
+for index, value := range arr {
+	fmt.Println(index, value)
+}
+```
+######2.值类型
+>在Go语言中数组是一个值类型（value type）。所有的值类型变量在赋值和作为参数传递时都将产生一次复制动作。在函数体中无法修改传入的数组的内容，因为函数内操作的只是传入数组的一个副本。
+```go
+func main() {
+	fmt.Println("Hello World!")
+	arr := [5]int{1, 2, 3, 4, 5}
+	modify(arr)
+	fmt.Println("main arr :", arr)
+
+}
+
+func modify(array [5]int) {
+	array[0] = 10
+	fmt.Println("modify array", array)
+}
+//输出
+//modify array [10 2 3 4 5]
+//main arr : [1 2 3 4 5]
+```
+###2.3.8 数组切片
+> 数组切片（`slice`）就像一个指向数组的指针，但拥有自己的数据结构，不仅仅是指针。**可以随时动态扩充存放空间，并且可以被随意传递而不悔到值所管理的元素被重复复制**
+
+-----
+
+>数组切片的数据结构抽象为以下三个变量：
+>* 一个指向原声数组的指针
+>* 数组切片中的元素个数
+>* 数组切片已分配的存储空间
+
+######1.创建数组切片
+* 基于数组
+* 直接创建
+```go
+	/**
+	基于数组创建数组切片
+	*/
+	//定义数组
+	arr := [10]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	//基于数组创建一个数组切片
+	var mySlice []int = arr[:5]
+
+	fmt.Println("elements of arr: ")
+	for _, v := range arr {
+		fmt.Println(v, "")
+	}
+	fmt.Println("elements of mySlice: ")
+	for _, v := range mySlice {
+		fmt.Println(v, "")
+	}
+```
+
+
+
