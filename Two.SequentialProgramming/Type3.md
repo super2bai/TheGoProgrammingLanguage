@@ -113,7 +113,7 @@ value3:=complex(3.2,12) //value3结果同value2
 详情请见`math/coplx`标准库的文档
 
 ###2.3.5 字符串
->在Go语言中，字符串也是一种基本类型。
+>在Go语言中，字符串也是一种基本类型。详情请见标准库strings包。
 ```go
 var str string
 str = "Hello, 世界" //字符串赋值
@@ -123,43 +123,41 @@ var str1 ="你好"
 str + str1			//字符串连接
 
 	
-	fmt.Println("根据长度遍历")
-	for i := 0; i < len(str); i++ {
-		s := str[i] //依据下标取字符串中的字符，类型为byte
-		fmt.Println(i, s)
-		/**
-		0 72
-		1 101
-		2 108
-		3 108
-		4 111
-		5 44
-		6 32
-		7 228
-		8 184
-		9 150
-		10 231
-		11 149
-		12 140
-		*/
-	}
-	fmt.Println("以Unicode字符遍历")
-	for i, ch := range str {
-		fmt.Println(i, ch)
-		/**
-		0 72
-		1 101
-		2 108
-		3 108
-		4 111
-		5 44
-		6 32
-		7 19990
-		10 30028
-		*/
-	}
-
-//其他操作请见标准库strings包
+fmt.Println("根据长度遍历")
+for i := 0; i < len(str); i++ {
+	s := str[i] //依据下标取字符串中的字符，类型为byte
+	fmt.Println(i, s)
+	/**
+	0 72
+	1 101
+	2 108
+	3 108
+	4 111
+	5 44
+	6 32
+	7 228
+	8 184
+	9 150
+	10 231
+	11 149
+	12 140
+	*/
+}
+fmt.Println("以Unicode字符遍历")
+for i, ch := range str {
+	fmt.Println(i, ch)
+	/**
+	0 72
+	1 101
+	2 108
+	3 108
+	4 111
+	5 44
+	6 32
+	7 19990
+	10 30028
+	*/
+}
 ```
 
 **UTF-8中，中文字符占3个字节**
@@ -213,17 +211,16 @@ func main() {
 	arr := [5]int{1, 2, 3, 4, 5}
 	modify(arr)
 	fmt.Println("main arr :", arr)
-
+	//main arr : [1 2 3 4 5]
 }
 
 func modify(array [5]int) {
 	array[0] = 10
 	fmt.Println("modify array", array)
+	//modify array [10 2 3 4 5]
 }
-//输出
-//modify array [10 2 3 4 5]
-//main arr : [1 2 3 4 5]
 ```
+
 ###2.3.8 数组切片
 > 数组切片（`slice`）就像一个指向数组的指针，但拥有自己的数据结构，不仅仅是指针。**可以随时动态扩充存放空间，并且可以被随意传递而不悔到值所管理的元素被重复复制**
 
