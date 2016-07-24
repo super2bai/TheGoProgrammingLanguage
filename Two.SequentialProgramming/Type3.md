@@ -75,6 +75,7 @@ c = (1 != 0) //编译正确
 >浮点型用语表示包含小数点的数据，Go中采用IEEE-754标准的表达方式
 ######1.浮点数表示
 >Go语言定义了两个类型`float32`和`float64`
+
 ```go
 var fvalue1 float32
 fvalue1 = 12
@@ -88,6 +89,7 @@ fvalue2 := 12.0
 fvalue1 = fvalue2 //编译错误，类型不同
 fvalue1 = float32(fvalue2)//编译正确，强转
 ```
+
 ######2.浮点数比较
 >因为浮点数不是一种精确的表达方式,不能用`==`来比较,会导致结果不稳定.
 ```go
@@ -233,7 +235,6 @@ func modify(array [5]int) {
 
 ######1.创建数组切片
 * 基于数组
-* 直接创建
 ```go
 	/**
 	基于数组创建数组切片
@@ -252,6 +253,95 @@ func modify(array [5]int) {
 		fmt.Println(v, "")
 	}
 ```
+**Go语言支持Array[first:last]**这样的方式来基于数组生成一个数组切片。
+```go
+	myArray := [10]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	mySlice :=myArray[:]
+	mySlice=myArray[:5
+	mySlice=myArray[5:]
+```
+* 直接创建
+**Go语言提供的内置函数make()可以用于灵活的创建数组切片。**
+```go
+mySlice1 := make([]int, 5)       //初始个数为5，元素初始值为0
+mySlice2 := make([]int, 5, 10)   //初始格式为5，元素初始值为0，并预留10个元素的存储空间
+mySlice3 := []int{1, 2, 3, 4, 5} //直接创建并初始化包含5个元素的数组切片
+```
+######2.元素遍历
+同数组
+######3.动态增减元素
+**可动态增减元素是数组切片比数组更强大的功能。**
+>数组切片多了一个存储能力（capacity）的概念，即元素个数和分配的空间可以是两个不同的值，合理的设置存储能力的值，可以大幅度降低数组切片内部重新分配内存和半送内存快的频率，从而大大提高程序性能。`cap()`函数返回的是数组切片分配的空间大小，而`len()`函数返回的是数组切片中当前所存储的元素个数。
+```go
+mySlice := make([]int, 5, 10) //初始格式为5，元素初始值为0，并预留10个元素的存储空间
+fmt.Println("len(mySlice)", len(mySlice))
+fmt.Println("cap(mySlice)", cap(mySlice))
 
+/**
+在mySlice后追加3个元素，从而生成一个新的数组切片
+append()的第二个参数其实是一个不定参数，可以按需求添加若干个元素
+甚至直接将一个数组切片追加到另一个数组切片的末尾
+*/
+mySlice2 := append(mySlice, 1, 2, 3)
+/**
+如果没有省略号，会有编译错误
+因为按append()的语义，从第二个参数起的所有参数都是待附加的元素
+*/
+mySlice3 := append(mySlice, mySlice2...)
+fmt.Println(mySlice2)
+fmt.Println(mySlice3)
+```
+######4.基于数组切片创建数组切片
+```go
+oldSlice := []int{1, 2, 3, 4, 5}
+newSlice := oldSlice[:3] //基于前三个创建数组切片
+```
+**选择的oldSlice元素范围可以i 超过所包含的元素个数，newSlice可以基于oldSlice的前六个元素创建，虽然oldSlice只有五个元素。只要选择的范围不超过oldSlice存储能力，那么个创建程序就是合法的。newslice中超过oldSlice元素的部分都会填上0。**
+######5.内容复制
+>数组切片支持Go语言的另一个内置函数`copy()`，用于将内容从一个数组切片复制到另一个数组切片。如果加入的两个数组切片不一样大，就会按其中较小的数组切片的元素个数进行复制。
+```go
+slice1 := []int{1, 2, 3, 4, 5}
+slice2 := []int{5, 4, 3}
+copy(slice2, slice1) //只会复制slice1的前3个元素到slice2中
+copy(slice1, slice2) //只会复制slice2的3个元素到slice1的前3个位置
 
+fmt.Println(slice1)
+fmt.Println(slice2)
+```
+###2.3.9 map
+**Go语言中，使用map不需要引入任何库，并且用起来也更加方便。**
+>map是一堆键值对的未排序集合。
+#####1.声明
+```go
+var myMap map[string] PersonInfo
+//var 变量名 map[key] value
+```
+######2.创建并赋值
+```go
+type PersonInfo struct {
+	ID      string
+	Name    string
+	Address string
+}
 
+func main() {
+	myMap = make(map[string]PersonInfo)
+	myMap = make(map[string]PersonInfo, 100) //指定存储能力
+	myMap = map[string]PersonInfo{"123": PersonInfo{"1", "Jack", "Rom 101"}}//赋值
+}
+```
+######3.元素删除
+>Go语言提供了一个内置函数 `delete()`，用于删除容器内的元素。
+```go
+delete(myMap,"123")
+//如果没有key为"123"的键值对，这个调用将什么都不会发生，也不会有什么副作用。
+//如果传入的map变量的值是nil，该调用将导致抛出异常（panic）。
+```
+######4.元素查找
+```go
+value, ok :=myMap["123"]
+if ok {
+	//找到了
+}
+```
+>判断是否成功找到特定的键，只需查看第二个返回值ok。
