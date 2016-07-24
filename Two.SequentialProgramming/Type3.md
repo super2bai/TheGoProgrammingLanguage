@@ -160,7 +160,6 @@ var a [32]byte                    //长度为32的数组，每个元素为一个
 var c [1000]*float64              //指针数组
 var d [3][5]int                   //二维数组,三行五列,15个元素
 var e [2][2][2]float64            //等同于[2]([2]([2]float64))
-
 len(a)							  //获得数组长度
 ```
 **Go中，数组长度在定义后就不可更改，在声明时长度可以为一个常量或者一个常量表达式（在编译器即可计算结果的表达式）***
@@ -168,11 +167,9 @@ len(a)							  //获得数组长度
 ######1. 元素访问
 ```go
 arr := [5]int{1, 2, 3, 4, 5}
-
 for i := 0; i < len(arr); i++ {
 	fmt.Println(i, arr[i])
 }
-
 for index, value := range arr {
 	fmt.Println(index, value)
 }
@@ -187,7 +184,6 @@ func main() {
 	fmt.Println("main arr :", arr)
 	//main arr : [1 2 3 4 5]
 }
-
 func modify(array [5]int) {
 	array[0] = 10
 	fmt.Println("modify array", array)
@@ -208,14 +204,10 @@ func modify(array [5]int) {
 ######1.创建数组切片
 * 基于数组
 ```go
-	/**
-	基于数组创建数组切片
-	*/
 	//定义数组
 	arr := [10]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 	//基于数组创建一个数组切片
 	var mySlice []int = arr[:5]
-
 	fmt.Println("elements of arr: ")
 	for _, v := range arr {
 		fmt.Println(v, "")
