@@ -124,7 +124,6 @@ ch := str[0]        //取字符串的第一个字符
 len(str)			//获取字符串长度
 var str1 ="你好"
 str + str1			//字符串连接
-
 for i := 0; i < len(str); i++ {
 	s := str[i] //依据下标取字符串中的字符，类型为byte
 	fmt.Println(i, s)
