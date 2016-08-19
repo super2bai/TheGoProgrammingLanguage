@@ -39,6 +39,39 @@ type RWMutex struct {
 ### 4.8.1 全局唯一性操作
 >对于从全局的角度只需药运行一次的代码，比如全局初始化操作，Go语言提供了一个`Once`类型来保证全局的唯一性操作。
 
+
+```go
+package main
+
+import (
+	"sync"
+	"time"
+)
+
+var a string = "hello, world"
+var once sync.Once
+
+func setup() {
+	print(a)
+}
+
+func doprint() {
+	once.Do(setup)
+
+}
+
+func twoprint() {
+	go doprint()
+	go doprint()
+}
+func main() {
+	twoprint()
+	time.Sleep(3e9)
+}
+```
+输出：hello, world
+
+
 ```go
 package main
 
@@ -72,9 +105,22 @@ func onced() {
 	fmt.Println("onced")
 }
 ```
+输出：
+onces
+count:  --- 0
+count:  --- 1
+count:  --- 2
+count:  --- 3
+count:  --- 4
+count:  --- 5
+count:  --- 6
+count:  --- 7
+count:  --- 8
+count:  --- 9
+
 整个程序，只会执行onces()方法一次,onced()方法是不会被执行的。
 
-为了更好的控制并行中的原子性操作，sync包中还包含一个`atomic`子包，它提供了对于一些基础数据类型的原子操作函数，保证多CPU对同一块内存的操作是原子的，如果我们善用原子操作，它会比锁更为高效。
+为了更好的控制并行中的原子性操作，sync包中还包含一个`atomic`子包，它提供了对于一些基础数据类型的原子操作函数，保证多CPU对同一块内存的操作是原子的，原子操作直接有底层CPU硬件支持，因而一般要比基于操作系统API的锁方式效率高些。
 
 **下面内容引用网页[原文地址](http://blog.csdn.net/zhijiayang/article/details/51727197)**
 
