@@ -31,7 +31,7 @@ func NewCenterServer() *CenterServer {
 	servers := make(map[string]ipc.Server)
 	players := make([]*Player, 0)
 
-	return &ConterServer{servers: servers, players: players}
+	return &CenterServer{servers: servers, players: players}
 }
 
 func (server *CenterServer) addPlayer(params string) error {
@@ -71,7 +71,7 @@ func (server *CenterServer) removePlayer(params string) error {
 	return errors.New("Player not found.")
 }
 
-func (server *CenterServer) listPlayer(params string) (player string, err error) {
+func (server *CenterServer) listPlayer(params string) (players string, err error) {
 	server.mutex.Lock()
 	defer server.mutex.Unlock()
 
@@ -104,7 +104,7 @@ func (server *CenterServer) broadcast(params string) error {
 	return err
 }
 
-func (server *CenterServer) Handle(method, params string) *ipc.Response {
+func (server *CenterServer) Handler(method, params string) *ipc.Response {
 	switch method {
 	case "addplayer":
 		err := server.addPlayer(params)
@@ -112,12 +112,12 @@ func (server *CenterServer) Handle(method, params string) *ipc.Response {
 			return &ipc.Response{Code: err.Error()}
 		}
 	case "removeplayer":
-		err := server.removeplayer(params)
+		err := server.removePlayer(params)
 		if err != nil {
 			return &ipc.Response{Code: err.Error()}
 		}
 	case "listplayer":
-		players, err := server.listplayer(params)
+		players, err := server.listPlayer(params)
 		if err != nil {
 			return &ipc.Response{Code: err.Error()}
 		}
@@ -127,12 +127,12 @@ func (server *CenterServer) Handle(method, params string) *ipc.Response {
 		if err != nil {
 			return &ipc.Response{Code: err.Error()}
 		}
-		return &ipc.Response{"200"}
+		return &ipc.Response{Code: "200"}
 	default:
-		return &ipc.Response{"404", Body: method + ":" + params}
+		return &ipc.Response{Code: "404", Body: method + ":" + params}
 
 	}
-	return &ipc.Response{"200"}
+	return &ipc.Response{Code: "200"}
 }
 
 func (server *CenterServer) Name() string {

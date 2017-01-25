@@ -6,6 +6,7 @@ import (
 
 	"ipc"
 )
+
 /**
 CenterClient匿名组合了IpcClient,
 这样就可以直接在代码中调用IpcClient的功能了。
@@ -53,8 +54,8 @@ func (client *CenterClient) Broadcast(message string) error {
 	if err != nil {
 		return nil
 	}
-	resp,_:=client.Call("broadcast",string(b))
-	if resp.Code="200"{
+	resp, _ := client.Call("broadcast", string(b))
+	if resp.Code == "200" {
 		return nil
 	}
 	return errors.New(resp.Code)

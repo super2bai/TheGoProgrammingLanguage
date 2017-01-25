@@ -25,6 +25,6 @@ func NewPlayer() *Player {
 			msg := <-p.mq
 			fmt.Println(p.Name, "received message:", msg.Content)
 		}
-	}(Player)
+	}(player)
 	return player
 }
