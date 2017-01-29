@@ -16,9 +16,11 @@ func main() {
 	service := os.Args[1]
 
 	//获取一个TCP地址信息,TCPAddr
+	//解析地址和端口号
 	tcpAddr, err := net.ResolveTCPAddr("tcp4", service)
 	checkError(err)
 	//创建一个TCP连接:TCPConn
+	//建立链接
 	conn, err := net.DialTCP("tcp", nil, tcpAddr)
 	checkError(err)
 	//发送HTTP请求头
@@ -39,21 +41,3 @@ func checkError(err error) {
 		os.Exit(0)
 	}
 }
-
-//func readFully(conn net.Conn) ([]byte, error) {
-//	defer conn.Close()
-
-//	result := bytes.NewBuffer(nil)
-//	var buf [512]byte
-//	for {
-//		n, err := conn.Read(buf[0:])
-//		result.Write(buf[0:n])
-//		if err != nil {
-//			if err == io.EOF {
-//				break
-//			}
-//			return nil, err
-//		}
-//	}
-//	return result.Bytes(), nil
-//}

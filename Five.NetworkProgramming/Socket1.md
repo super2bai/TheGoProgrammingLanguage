@@ -79,4 +79,39 @@ Custom data matches
 #### 5.1.3 TCP示例程序
 
 例子：建立`TCP`链接来实现初步的HTTP协议，通过向网络主机发送HTTP Head请求，读取网络主机返回的信息。
-[TCP示例程序]()
+[TCP示例程序](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/code/simplehttp.go)
+
+用法：
+```bash
+$ go build simplehttp.go
+$ ./simplehttp baidu.com:80
+
+output:
+HTTP/1.1 200 OK
+Date: Sun, 29 Jan 2017 04:53:06 GMT
+Server: Apache
+Last-Modified: Tue, 12 Jan 2010 13:48:00 GMT
+ETag: "51-47cf7e6ee8400"
+Accept-Ranges: bytes
+Content-Length: 81
+Cache-Control: max-age=86400
+Expires: Mon, 30 Jan 2017 04:53:06 GMT
+Connection: Close
+Content-Type: text/html
+```
+
+`net.ResolveTCPAddr()`用于解析地址和端口号
+`net.DialTCP()`用于建立链接
+这两个函数都在`Dial()`中得到了封装。
+此外，`net`包中还包含了一系列的工具函数，合理地使用这些函数可以更好地保障程序地质量。
+```go
+//验证IP地址有效性地代码
+func net.ParseIP()
+//创建子网掩码地代码
+func IPv4Mask(a,b,c,d byte) IPMask
+//获取默认子网掩码
+func (ip IP)DefaultMask() IPMask
+//根据域名查找IP的代码
+func ResolveIPAddr(net,addr string)(*IPAddr, error)
+func LookupHost(name string)(cname string,addrs []string,err error)
+```
