@@ -61,3 +61,17 @@ conn, err := net.Dial("ip4:1","10.0.0.3")
 例子：使用`ICMP`协议向在线的主机发送一个问候，并等待主机返回。
 
 [示例程序](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/code/icmptest.go)
+
+用法：
+```bash
+$ sudo su
+$ go build icmptest.go
+$ ./icmptest www.baidu.com
+
+output:
+[69 0 9 0 32 96 0 0 54 1 187 104 61 135 169 125 192 168 1 107 0 0 156 205 0 13 0 37 99]
+Got response
+Identifier matches
+Sequence matches
+Custom data matches
+```
