@@ -14,7 +14,7 @@ func main() {
 	}
 
 	service := os.Args[1]
-	fmt.Println("service:", service)
+
 	//获取一个TCP地址信息,TCPAddr
 	tcpAddr, err := net.ResolveTCPAddr("tcp4", service)
 	checkError(err)
