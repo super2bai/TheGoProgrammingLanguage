@@ -59,3 +59,5 @@ conn, err := net.Dial("ip4:1","10.0.0.3")
 #### 5.1.2 ICMP示例程序
 
 例子：使用`ICMP`协议向在线的主机发送一个问候，并等待主机返回。
+
+[示例程序](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/code/icmptest.go)
