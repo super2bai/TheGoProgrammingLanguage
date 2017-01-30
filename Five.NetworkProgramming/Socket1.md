@@ -100,6 +100,7 @@ Connection: Close
 Content-Type: text/html
 ```
 
+
 `net.ResolveTCPAddr()`用于解析地址和端口号
 `net.DialTCP()`用于建立链接
 这两个函数都在`Dial()`中得到了封装。
