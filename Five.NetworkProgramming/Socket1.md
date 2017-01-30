@@ -100,6 +100,15 @@ Connection: Close
 Content-Type: text/html
 ```
 
+#### 5.1.4 更丰富的网络通信
+实际上，`Dial()`函数是对`DialTCP()`、`DialUDP()`、`DialIP()`和`DialUnix()`的封装。也可以直接调用这些函数，它们的功能是一致的。这些函数的原型如下：
+```go
+func DialTCP(net string, laddr, raddr *TCPAddr) (*TCPConn, error) 
+func DialUDP(net string, laddr, raddr *UDPAddr) (*UDPConn, error) 
+func DialIP(netProto string, laddr, raddr *IPAddr) (*IPConn, error) 
+func DialUnix(net string, laddr, raddr *UnixAddr) (*UnixConn, error) 
+```
+之前基于TCP发送HTTP请求，读取服务器返回的HTTP head的整个流程也可以使用[simplehttp2](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/code/simplehttp2.go)
 
 `net.ResolveTCPAddr()`用于解析地址和端口号
 `net.DialTCP()`用于建立链接
