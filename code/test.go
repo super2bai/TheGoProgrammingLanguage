@@ -16,5 +16,3 @@ func main() {
 	req.Header.Add("If-None-Match", `W/"TheFileEtag"`)
 	resp, err = client.Do(req)
 }
-
-func redirectPolicyFunc() {}

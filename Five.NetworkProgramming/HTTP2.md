@@ -12,6 +12,7 @@ Go语言标准库内建提供了`net/http`包，涵盖了HTTP客户端和服务�
 Go内置的`net/http`包提供了最简洁的HTTP客户端实现，无需借助第三方网络通信库(比如`libcurl`)就可以直接使用HTTP中用得最多的`GET`和`POST`方式请求数据。
 
 **1.基本方法**
+
 `net/http`包的Client类型提供了如下几个方法，可以用最简洁的方式实现HTTP请求：
 ```go
 func (c *Client) Get(url string) (resp *Response, err error)
@@ -94,6 +95,7 @@ resp, err := client.Do(req)
 ```
 
 **2.高级封装**
+
 除了之前介绍的基本HTTP操作，Go语言标准库也暴露了比较底层的HTTP相关库，让开发者可以基于这些库灵活定制HTTP服务器和使用HTTP服务。
 
 * 自定义`http.Client`
