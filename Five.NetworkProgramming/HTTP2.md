@@ -92,3 +92,91 @@ client := &http.Client{}
 resp, err := client.Do(req)
 //...
 ```
+
+**2.高级封装**
+除了之前介绍的基本HTTP操作，Go语言标准库也暴露了比较底层的HTTP相关库，让开发者可以基于这些库灵活定制HTTP服务器和使用HTTP服务。
+
+* 自定义`http.Client`
+
+前面使用的`http.Get()`、`http.Post()`、`http.PostForm()`和`http.Head()`方法其实都是在`http.DefaultClient`的基础上进行调用的，比如`http.Get()`等价于`http.DefaultClient.Get()`，以此类推。
+
+`http.DefaultClient`在字面上就传达了一个信息，既然存在默认的Client，那么HTTP Client大概是可以自定义的。实际上确实如何，在`net/http`包中，的确提供了Client类型。`http.Client`支持的类型：
+
+```go
+type Client struct {
+	// Transport specifies the mechanism by which individual
+	// HTTP requests are made.
+	// If nil, DefaultTransport is used.
+	//Transport用于确定HTTP请求的创建机制。
+	//如果为空，将会使用DefaultTransport
+	Transport RoundTripper
+
+	// CheckRedirect specifies the policy for handling redirects.
+	// If CheckRedirect is not nil, the client calls it before
+	// following an HTTP redirect. The arguments req and via are
+	// the upcoming request and the requests made already, oldest
+	// first. If CheckRedirect returns an error, the Client's Get
+	// method returns both the previous Response and
+	// CheckRedirect's error (wrapped in a url.Error) instead of
+	// issuing the Request req.
+	//
+	// If CheckRedirect is nil, the Client uses its default policy,
+	// which is to stop after 10 consecutive requests.
+	//CheckRedirect定义重定向策略
+	//如果CheckRedirect不为空，客户端将在跟踪HTTP重定向前调用该函数
+	//两个参数req和via分别为即将发起的请求和已经发起的所有请求，最早的已发起请求在最前面
+	//如果CheckRedirect返回错误，客户端将直接返回错误，不会再发起该请求
+	//如果CheckRedirect为空，Client将采用一种默认策略，将在10个连续请求后终止
+	CheckRedirect func(req *Request, via []*Request) error
+
+	// Jar specifies the cookie jar.
+	// If Jar is nil, cookies are not sent in requests and ignored
+	// in responses.
+	//如果Jar为空，Cookie将不会在请求中发送，并会在响应中bei
+	Jar CookieJar
+
+	// Timeout specifies a time limit for requests made by this
+	// Client. The timeout includes connection time, any
+	// redirects, and reading the response body. The timer remains
+	// running after Get, Head, Post, or Do return and will
+	// interrupt reading of the Response.Body.
+	//
+	// A Timeout of zero means no timeout.
+	//
+	// The Client cancels requests to the underlying Transport
+	// using the Request.Cancel mechanism. Requests passed
+	// to Client.Do may still set Request.Cancel; both will
+	// cancel the request.
+	//
+	// For compatibility, the Client will also use the deprecated
+	// CancelRequest method on Transport if found. New
+	// RoundTripper implementations should use Request.Cancel
+	// instead of implementing CancelRequest.
+	Timeout time.Duration
+}
+```
+在Go语言标准库中，`http.Client`类型包含了3个公开数据成员：
+* `Transport RoundTripper`
+* `CheckRedirect func(req *Request, via []*Request) err`
+* `Jar CookieJar`
+
+其中**`Transport`**类型必须实现`http.RoundTripper`接口。`Transport`指定了执行一个HTTP请求的运行机制，倘若不指定具体的`Transport`，默认会使用`http.DefaultTransport`,这意味着`http.Transport`也是可以自定义的。`net/http`包中的`http.Transport`类型实现了`http.RoundTripper`接口。
+
+**`CheckRedirect`**函数指定处理重定向的策略。当使用HTTP Client的`Get()`或者是`Head()`方法发送HTTP请求时，若响应返回的状态码为30x(比如301/302/303/307)，HTTP Client会在遵循跳转规则前先调用这个`CheckRedirect`函数。
+
+**`Jar`**可用于在HTTP Client中设定Cookie,Jar的类型必须实现了`http.CookieJar`接口，该接口预定义的`SetCookies()` 和`Cookies()`两个方法。如果HTTP Client中没有设定Jar，Cookie将被忽略而不会发送到客户端。实际上，一般都用`http.SetCookie()`方法来设定Cookie
+
+使用自定义的`http.Client`及其`Do()`方法，可以非常灵活地控制HTTP请求，比如发送自定义HTTP Header或是改写重定向策略等。创建自定义的HTTP Client非常简单，具体代码如下
+
+```go
+client := &http.Client{
+	CheckRedirect: redirectPolicyFunc,
+}
+resp, err := client.Get("http.example.com")
+//...
+req, err := http.NewRequest("GET", "http://example.com", nil)
+//...
+req.Header.Add("User-Agent", "Our Custom User-Agent")
+req.Header.Add("If-None-Match", `W/"TheFileEtag"`)
+resp, err = client.Do(req)
+```
