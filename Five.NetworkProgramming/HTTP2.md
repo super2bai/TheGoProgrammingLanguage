@@ -134,7 +134,7 @@ type Client struct {
 	// Jar specifies the cookie jar.
 	// If Jar is nil, cookies are not sent in requests and ignored
 	// in responses.
-	//如果Jar为空，Cookie将不会在请求中发送，并会在响应中bei
+	//如果Jar为空，Cookie将不会在请求中发送，并会在响应中被忽略
 	Jar CookieJar
 
 	// Timeout specifies a time limit for requests made by this
