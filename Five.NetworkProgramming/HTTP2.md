@@ -182,3 +182,103 @@ req.Header.Add("User-Agent", "Our Custom User-Agent")
 req.Header.Add("If-None-Match", `W/"TheFileEtag"`)
 resp, err = client.Do(req)
 ```
+
+* 自定义`http.Transport`
+在`http.Client`类型的机构定义中，看到的第一个数据成员就是一个`http.Transport`对象，该对象指定执行一个`HTTP`请求时的运行规则。
+
+```go
+//定义了`http.Transport`类型中的公开数据成员
+type Transport struct {
+	//...other ignore code
+
+	// Proxy specifies a function to return a proxy for a given
+	// Request. If the function returns a non-nil error, the
+	// request is aborted with the provided error.
+	// If Proxy is nil or returns a nil *URL, no proxy is used.
+	//Proxy指定用于针对特定请求返回代理的函数。
+	//接收一个*Request类型的请求实例作为参数并返回一个最终的HTTP代理
+	//如果该函数返回一个非空的错误，请求将终止并返回该错误
+	//如果Proxy为空或者返回一个空的URL指针，将不使用代理
+	Proxy func(*Request) (*url.URL, error)
+
+	// Dial specifies the dial function for creating unencrypted
+	// TCP connections.
+	// If Dial is nil, net.Dial is used.
+	//Dial指定具体的dail()函数用于创建TCP连接
+	//如果Dial为空，将默认使用`net.Dial()`函数
+	Dial func(network, addr string) (net.Conn, error)
+	//...other ignore code
+	// TLSClientConfig specifies the TLS configuration to use with
+	// tls.Client. If nil, the default configuration is used.
+	//SSL连接专用.指定用于`tls.Client`的TLS配置信息
+	//如果为空则使用默认配置
+	TLSClientConfig *tls.Config
+
+	// TLSHandshakeTimeout specifies the maximum amount of time waiting to
+	// wait for a TLS handshake. Zero means no timeout.
+	TLSHandshakeTimeout time.Duration
+
+	// DisableKeepAlives, if true, prevents re-use of TCP connections
+	// between different HTTP requests.
+	//是否取消长连接，默认值为false，即启用长连接
+	DisableKeepAlives bool
+
+	// DisableCompression, if true, prevents the Transport from
+	// requesting compression with an "Accept-Encoding: gzip"
+	// request header when the Request contains no existing
+	// Accept-Encoding value. If the Transport requests gzip on
+	// its own and gets a gzipped response, it's transparently
+	// decoded in the Response.Body. However, if the user
+	// explicitly requested gzip it is not automatically
+	// uncompressed.
+	//是否取消压缩(GZip)，默认值为false，即启用压缩
+	DisableCompression bool
+
+	// MaxIdleConnsPerHost, if non-zero, controls the maximum idle
+	// (keep-alive) to keep per-host.  If zero,
+	// DefaultMaxIdleConnsPerHost is used.
+	//如果非零值，指定与每个请求的目标主机之间的最大非活跃连接(keep-alive)数量
+	//如果该值为空，则使用DefaultMaxIdleConnsPerHost常量值
+	MaxIdleConnsPerHost int
+
+	//...other ignore code
+}
+
+// CloseIdleConnections closes any connections which were previously
+// connected from previous requests but are now sitting idle in
+// a "keep-alive" state. It does not interrupt any connections currently
+// in use.
+//用于关闭所有非活跃的连接
+func (t *Transport) CloseIdleConnections() 
+// RegisterProtocol registers a new protocol with scheme.
+// The Transport will pass requests using the given scheme to rt.
+// It is rt's responsibility to simulate HTTP request semantics.
+//
+// RegisterProtocol can be used by other packages to provide
+// implementations of protocol schemes like "ftp" or "file".
+//
+// If rt.RoundTrip returns ErrSkipAltProtocol, the Transport will
+// handle the RoundTrip itself for that one request, as if the
+// protocol were not registered.
+//该方法可用于注册并启用一个新的传输协议，比如WebSocket的传输协议标准(ws)，或者FTP、File协议等
+func (t *Transport) RegisterProtocol(scheme string, rt RoundTripper)
+// RoundTrip implements the RoundTripper interface.
+//
+// For higher-level HTTP client support (such as handling of cookies
+// and redirects), see Get, Post, and the Client type.
+//用于实现http.RoundTripper接口
+func (t *Transport) RoundTrip(req *Request) (*Response, error)
+```
+
+**自定义`http.Transport`**
+
+```go
+tr := &http.Transport{
+		TLSClientConfig:    &tls.Config{RootCAs: pool},
+		DisableCompression: true,
+	}
+	client := &http.Client{Transport: tr}
+	resp, err := client.Get("https://example.com")
+```
+Client和Transport在执行多个`goroutine`的并发过程中都是安全的，单处于性能考虑，应当创建一次后反复使用。
+
