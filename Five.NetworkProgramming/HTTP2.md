@@ -77,7 +77,7 @@ Go内置的`net/http`包同样也提供了`http.Head()`方法，该方法同`htt
 resp, err := http.Head("http://example.com/")
 ```
 
-* (*http.Client).Do()
+* `(*http.Client).Do()`
 在多数情况下，`http.Get()`和`http.PostForm()`就可以满足需求，但是如果我们发起的HTTP请求需要更多的定制信息，设定一些自定义的`Http Header`字段，比如：
 	* 设定自定义的"User-Agent"，而不是默认的"Go http package"
 	* 传递Cookie
@@ -282,3 +282,43 @@ tr := &http.Transport{
 ```
 Client和Transport在执行多个`goroutine`的并发过程中都是安全的，单处于性能考虑，应当创建一次后反复使用。
 
+
+* 灵活的`http.RoundTripper`接口
+在前面的两小节中，我们知道`HTTP Client`是可以自定义的，而`http.Client` 定义的第一个公开成员就是一个`http.Transport`类型的实例，且该成员所对应的类型必须实现`http.RoundTripper`接口。
+
+```go 
+type RoundTripper interface {
+	// RoundTrip executes a single HTTP transaction, returning
+	// a Response for the provided Request.
+	//
+	// RoundTrip should not attempt to interpret the response. In
+	// particular, RoundTrip must return err == nil if it obtained
+	// a response, regardless of the response's HTTP status code.
+	// A non-nil err should be reserved for failure to obtain a
+	// response. Similarly, RoundTrip should not attempt to
+	// handle higher-level protocol details such as redirects,
+	// authentication, or cookies.
+	//
+	// RoundTrip should not modify the request, except for
+	// consuming and closing the Request's Body.
+	//
+	// RoundTrip must always close the body, including on errors,
+	// but depending on the implementation may do so in a separate
+	// goroutine even after RoundTrip returns. This means that
+	// callers wanting to reuse the body for subsequent requests
+	// must arrange to wait for the Close call before doing so.
+	//
+	// The Request's URL and Header fields must be initialized.
+	//RoundTrip执行一个单一的HTTP事务，返回相应的相应信息
+	//RoundTrip函数的实现不应该试图去理解响应的内容。
+	//如果RoundTrip得到一个响应，无论该响应的HTTP状态码如何，都应将返回的err设置为nil。
+	//非空的err只以为着没有成功获取到响应。
+	//类似的，RoundTrip也不应识图处理更高级别的协议，比如重定向、认证和Cookie等。
+	//RoundTrip不应修改响应内容，除非是为了理解Body内容。
+	//每一个请求的URL和Header域都应被正确初始化
+	RoundTrip(*Request) (*Response, error)
+}
+```
+`http.ToundTripper`接口只定义了一个名为`RoundTrip`的方法。任何实现了`RoundTrip()`方法的类型即可实现`http.RoundTripper`接口。前面我们看到的`http.Transport`类型正是实现了`RoundTrip()`方法继而实现了该接口。
+
+通常，我们可以在默认的`http.Transport`之上包一层`Transport`并实现`RoundTrip()`方法，如
