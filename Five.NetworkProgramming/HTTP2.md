@@ -184,7 +184,8 @@ resp, err = client.Do(req)
 ```
 
 * 自定义`http.Transport`
-在`http.Client`类型的机构定义中，看到的第一个数据成员就是一个`http.Transport`对象，该对象指定执行一个`HTTP`请求时的运行规则。
+
+在`http.Client`类型的结构定义中，看到的第一个数据成员就是一个`http.Transport`对象，该对象指定执行一个`HTTP`请求时的运行规则。
 
 ```go
 //定义了`http.Transport`类型中的公开数据成员
@@ -284,6 +285,7 @@ Client和Transport在执行多个`goroutine`的并发过程中都是安全的，
 
 
 * 灵活的`http.RoundTripper`接口
+
 在前面的两小节中，我们知道`HTTP Client`是可以自定义的，而`http.Client` 定义的第一个公开成员就是一个`http.Transport`类型的实例，且该成员所对应的类型必须实现`http.RoundTripper`接口。
 
 ```go 
@@ -325,7 +327,7 @@ type RoundTripper interface {
 
 因为实现了`http.RoundTripper`接口的代码通常需要在多个goroutine中并发执行，因此我们必须确保实现代码的线程安全性。
 
-* 设计优雅的HTTP Client
+* 设计优雅的`HTTP Client`
 
 综上示例讲解可以看到，Go语言标准库提供的HTTP Client是相当优雅的。一方面提供了极其简单的使用方式，另一方面又具备极大的灵活性。
 Go语言标准库提供的HTTP Client被设计成上下两层结构。一层是上述提到`http.Client`类及其封装的基础方法，我们不妨称其为"业务层"，是因为调用方通畅只需要关心请求的业务逻辑本身，而无须关心非业务相关的技术细节，这些细节包括：
