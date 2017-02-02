@@ -321,4 +321,16 @@ type RoundTripper interface {
 ```
 `http.ToundTripper`接口只定义了一个名为`RoundTrip`的方法。任何实现了`RoundTrip()`方法的类型即可实现`http.RoundTripper`接口。前面我们看到的`http.Transport`类型正是实现了`RoundTrip()`方法继而实现了该接口。
 
-通常，我们可以在默认的`http.Transport`之上包一层`Transport`并实现`RoundTrip()`方法，如
+通常，我们可以在默认的`http.Transport`之上包一层`Transport`并实现`RoundTrip()`方法，[例子customtrans.go](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/code/customtrans.go )
+
+因为实现了`http.RoundTripper`接口的代码通常需要在多个goroutine中并发执行，因此我们必须确保实现代码的线程安全性。
+
+* 设计优雅的HTTP Client
+综上示例讲解可以看到，Go语言标准库提供的HTTP Client是相当优雅的。一方面提供了极其简单的使用方式，另一方面又具备极大的灵活性。
+Go语言标准库提供的HTTP Client被设计成上下两层结构。一层是上述提到`http.Client`类及其封装的基础方法，我们不妨称其为"业务层"，是因为调用方通畅只需要关心请求的业务逻辑本身，而无须关心非业务相关的技术细节，这些细节包括：
+* HTTP底层传输细节
+* HTTP代理
+* gzip压缩
+* 连接池及其管理
+* 认证(SSL或其他认证方法)
+之所以`HTTP Client`可以做到这么好的封装行，是因为`HTTP Client`在底层抽象了`http.RoundTripper`接口，而`http.Transport`实现了该接口，从而能够处理更多的细节，我们不妨将其称为"传输层"。`HTTP Client`在业务层初始化`HTTP Method`、目标URL、请求参数、请求内容等重要信息后，经过"传输层","传输层"在业务层处理的基础上补充其他细节，然后再发起HTTP请求，接收服务端返回的`HTTP`响应。
