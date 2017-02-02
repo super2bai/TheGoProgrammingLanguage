@@ -333,4 +333,5 @@ Go语言标准库提供的HTTP Client被设计成上下两层结构。一层是�
 	* gzip压缩
 	* 连接池及其管理
 	* 认证(SSL或其他认证方法)
+	
 之所以`HTTP Client`可以做到这么好的封装行，是因为`HTTP Client`在底层抽象了`http.RoundTripper`接口，而`http.Transport`实现了该接口，从而能够处理更多的细节，我们不妨将其称为"传输层"。`HTTP Client`在业务层初始化`HTTP Method`、目标URL、请求参数、请求内容等重要信息后，经过"传输层","传输层"在业务层处理的基础上补充其他细节，然后再发起HTTP请求，接收服务端返回的`HTTP`响应。
