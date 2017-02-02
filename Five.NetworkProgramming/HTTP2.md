@@ -185,6 +185,7 @@ resp, err = client.Do(req)
 
 * 自定义`http.Transport`
 
+
 在`http.Client`类型的结构定义中，看到的第一个数据成员就是一个`http.Transport`对象，该对象指定执行一个`HTTP`请求时的运行规则。
 
 ```go
@@ -321,6 +322,7 @@ type RoundTripper interface {
 	RoundTrip(*Request) (*Response, error)
 }
 ```
+
 `http.ToundTripper`接口只定义了一个名为`RoundTrip`的方法。任何实现了`RoundTrip()`方法的类型即可实现`http.RoundTripper`接口。前面我们看到的`http.Transport`类型正是实现了`RoundTrip()`方法继而实现了该接口。
 
 通常，我们可以在默认的`http.Transport`之上包一层`Transport`并实现`RoundTrip()`方法，[例子customtrans.go](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/code/customtrans.go )
