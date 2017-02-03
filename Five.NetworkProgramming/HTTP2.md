@@ -332,7 +332,7 @@ type RoundTripper interface {
 * 设计优雅的`HTTP Client`
 
 综上示例讲解可以看到，Go语言标准库提供的HTTP Client是相当优雅的。一方面提供了极其简单的使用方式，另一方面又具备极大的灵活性。
-Go语言标准库提供的HTTP Client被设计成上下两层结构。一层是上述提到`http.Client`类及其封装的基础方法，我们不妨称其为"业务层"，是因为调用方通畅只需要关心请求的业务逻辑本身，而无须关心非业务相关的技术细节，这些细节包括：
+Go语言标准库提供的HTTP Client被设计成上下两层结构。一层是上述提到`http.Client`类及其封装的基础方法，我们不妨称其为"业务层"，是因为调用方通畅只需要关心请求的业务逻辑本身，而无须关心非业务相关的技术细节，这些细节包括
 	* HTTP底层传输细节
 	* HTTP代理
 	* gzip压缩
@@ -351,7 +351,7 @@ Go语言标准库提供的HTTP Client被设计成上下两层结构。一层是�
 
 ```go
 /**
-该方法用于在指定的`TCP`网络地址`addr`进行监听，然后调用服务端处理程序来处理传入的连接请求。
+该方法用于在指定的TCP网络地址addr进行监听，然后调用服务端处理程序来处理传入的连接请求。
 
 addr:监听地址
 handler:服务端处理程序(通常为空)
@@ -382,11 +382,13 @@ log.Fatal(s.ListenAndServe())
 ```
 
 **2.处理`HTTPS`请求**
+
 `net/http`包还提供`http.ListenAndServeTLS()`方法，用于处理https连接请求：
 ```go
 func ListenAndServeTLS(addr string,certFile string,keyFile string,handler Handler) error
 ```
-`ListenAndServeTLS`和`ListenAndServe`的行为一致，区别在于只处理HTTPS请求。此外，服务器上必须包含证书和与之匹配的私钥的相关文件，比如`certFile`对应的SSL证书文件存放路径，`keyFile`对应证书私钥文件路径。如果证书是由证书颁发机构签署的，`certFile`参数指定的路径必须是存放在服务器上的经由CA认证过的SSL证书。
+`ListenAndServeTLS`和`ListenAndServe`的行为一致，区别在于只处理`HTTPS`请求。
+此外，服务器上必须包含证书和与之匹配的私钥的相关文件，比如`certFile`对应的SSL证书文件存放路径，`keyFile`对应证书私钥文件路径。如果证书是由证书颁发机构签署的，`certFile`参数指定的路径必须是存放在服务器上的经由CA认证过的SSL证书。
 
 开启SSL监听服务也很简单，代码如下所示：
 ```go
