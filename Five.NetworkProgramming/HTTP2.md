@@ -340,3 +340,70 @@ Go语言标准库提供的HTTP Client被设计成上下两层结构。一层是�
 	* 认证(SSL或其他认证方法)
 	
 之所以`HTTP Client`可以做到这么好的封装行，是因为`HTTP Client`在底层抽象了`http.RoundTripper`接口，而`http.Transport`实现了该接口，从而能够处理更多的细节，我们不妨将其称为"传输层"。`HTTP Client`在业务层初始化`HTTP Method`、目标URL、请求参数、请求内容等重要信息后，经过"传输层","传输层"在业务层处理的基础上补充其他细节，然后再发起HTTP请求，接收服务端返回的`HTTP`响应。
+
+#### 5.2.2 HTTP服务端
+
+本节将介绍HTTP服务端结束，包括如何处理HTTP请求和HTTPS请求。
+
+**1.处理HTTP请求**
+
+使用`net/http`包提供的`http.ListenAndServe()`方法，可以在指定的地址进行监听，开启一个`HTTP`，服务端该方法的原型如下：
+
+```go
+/**
+该方法用于在指定的`TCP`网络地址`addr`进行监听，然后调用服务端处理程序来处理传入的连接请求。
+
+addr:监听地址
+handler:服务端处理程序(通常为空)
+*/
+func ListenAndServe(addr string,handler Handler) err
+```
+其中handler为空，这意味着服务端调用http.DefaultServeMux进行处理，而服务端编写的业务逻辑处理程序http.Handle()或http.HandleFunc()默认注入http.DefaultServeMux中，具体代码如下：
+
+```go
+http.Handle("/foo",fooHandler)
+http.HandleFunc("/bar",func(w http.ResponseWriter, r *http.Request){
+	fmt.Fprintf(w,"Hello,%q",html.EscapeString(r.URL.Path))
+})
+log.Fatal(http.ListenAndServe(":8080",nil))
+```
+
+如果想更多地控制服务端的行为，可以自定义`http.Server`，代码如下：
+
+```go
+s := &http.Server{
+		Addr:           ":8080",
+		Handler:        myHandler,
+		ReadTimeout:    10 * time.Second,
+		WriteTimeout:   10 * time.Second,
+		MaxHeaderBytes: 1 << 20,
+	}
+log.Fatal(s.ListenAndServe())
+```
+
+**2.处理`HTTPS`请求**
+`net/http`包还提供`http.ListenAndServeTLS()`方法，用于处理https连接请求：
+```go
+func ListenAndServeTLS(addr string,certFile string,keyFile string,handler Handler) error
+```
+`ListenAndServeTLS`和`ListenAndServe`的行为一致，区别在于只处理HTTPS请求。此外，服务器上必须包含证书和与之匹配的私钥的相关文件，比如`certFile`对应的SSL证书文件存放路径，`keyFile`对应证书私钥文件路径。如果证书是由证书颁发机构签署的，`certFile`参数指定的路径必须是存放在服务器上的经由CA认证过的SSL证书。
+
+开启SSL监听服务也很简单，代码如下所示：
+```go
+http.Handle("/foo",fooHandler)
+http.HandleFunc("/bar",func(w http.ResponseWriter, r *http.Request){
+	fmt.Fprintf(w,"Hello,%q",html.EscapeString(r.URL.Path))
+})
+log.Fatal(http.ListenAndServeTLS(":10443","cert.pem,"key.pem",nil))
+```
+或者是
+```go
+ss := &http.Server{
+		Addr:           ":10443",
+		Handler:        myHandler,
+		ReadTimeout:    10 * time.Second,
+		WriteTimeout:   10 * time.Second,
+		MaxHeaderBytes: 1 << 20,
+	}
+log.Fatal(ss.ListenAndServeTLS("cert.pem","key.pem"))
+```
