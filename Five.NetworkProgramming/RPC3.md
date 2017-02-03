@@ -30,4 +30,4 @@ RPC服务端可以通过调用`rpc.ServeConn`处理单个连接请求。多数�
 无论是调用RPC客户端的`Call()`或者是`Go()`方法，都必须指定要调用的服务及其方法名称，以及一个客户端传入参数的引用，还有一个用于接收处理结果参数的指针。
 
 如果没有明确指定RPC传输过程中使用何种编码解码器，默认将使用Go标准库提供的`encoding/gob`包进行数据传输。
-[RPC服务端和客户端交互的示例程序](www.baidu.com)
+[RPC服务端和客户端交互的示例程序](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/code/rpcserver.go)
