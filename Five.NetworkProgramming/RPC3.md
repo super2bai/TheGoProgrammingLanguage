@@ -31,3 +31,53 @@ RPC服务端可以通过调用`rpc.ServeConn`处理单个连接请求。多数�
 
 如果没有明确指定RPC传输过程中使用何种编码解码器，默认将使用Go标准库提供的`encoding/gob`包进行数据传输。
 [RPC服务端和客户端交互的示例程序](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/code/rpcserver.go)
+
+#### 5.3.2 Gob简介
+>Gob是Go的一个**序列化数据结构的编码解码工具**，在Go标准库中内置`encoding/gob`包以供使用。一个数据结构使用Gob进行序列化之后，能够用于网络传输。与JSON或XML这种基于文本描述的数据交换语言不通，Gob是二进制编码的数据流，并且Gob流是可以自解释的，它在保证高效率的同时，也具备完整的表达能力。
+
+作为针对Go的数据结构进行编码和解码的专用序列化方法，这意味着Gob无法跨语言使用。在Go的`net/rpc`包中，传输数据所需要用到的编码解码器，默认就是Gob。**由于Gob仅局限于使用Go开发的程序，这意味着我们只能用Go的RPC实现进程间通信**。然而，大多数时候，我们用Go编写RPC服务器（或客户端），可能更希望它是通用的，与语言无关的，无论是Python、Java货其他语言实现的RPC客户端，均可与之通信。
+
+#### 5.3.3 设计优雅的RPC接口
+Go的`net/rpc`很灵活，它在数据传输前后显示了编码解码器的接口定义。这意味着，开发者可以自定义数据的传输方式以及RPC服务端和客户端之间的交互行为。
+
+RPC提供的编码解码器接口如下：
+```go
+// A ClientCodec implements writing of RPC requests and
+// reading of RPC responses for the client side of an RPC session.
+// The client calls WriteRequest to write a request to the connection
+// and calls ReadResponseHeader and ReadResponseBody in pairs
+// to read responses.  The client calls Close when finished with the
+// connection. ReadResponseBody may be called with a nil
+// argument to force the body of the response to be read and then
+// discarded.
+type ClientCodec interface {
+	// WriteRequest must be safe for concurrent use by multiple goroutines.
+	WriteRequest(*Request, interface{}) error
+	ReadResponseHeader(*Response) error
+	ReadResponseBody(interface{}) error
+
+	Close() error
+}
+
+// A ServerCodec implements reading of RPC requests and writing of
+// RPC responses for the server side of an RPC session.
+// The server calls ReadRequestHeader and ReadRequestBody in pairs
+// to read requests from the connection, and it calls WriteResponse to
+// write a response back.  The server calls Close when finished with the
+// connection. ReadRequestBody may be called with a nil
+// argument to force the body of the request to be read and discarded.
+type ServerCodec interface {
+	ReadRequestHeader(*Request) error
+	ReadRequestBody(interface{}) error
+	// WriteResponse must be safe for concurrent use by multiple goroutines.
+	WriteResponse(*Response, interface{}) error
+
+	Close() error
+}
+```
+
+接口`ClientCodec`定义了RPC客户端如何在一个RPC会话中发送请求和读取响应。客户端程序通过`WriteRequest()`方法将一个请求写入到RPC连接中，并通过`ReadResponseHeader()`和`ReadResponseBody()`读取服务器端的响应信息。当整个过程执行完毕后，再通过Close()方法来关闭该连接。
+
+接口`ServerCodec`定义了RPC服务器如何在一个RPC绘画中接收请求并发送响应。服务器端程序通过`ReadRequestHeader()`和`ReadRequestBody()`方法从一个RPC连接中读取请求信息，然后再通过`WriteResponse()`方法向该连接中的RPC客户端发送响应。当完成该过程欧，通过`Close()`方法来关闭连接。
+
+通过实现上述接口，我们可以自定义数据传输前后的编码解码方式，而不仅仅局限于Gob。同样，可以自定义RPC服务端和客户端的交互行为。实际上， Go标准库提供的`net/rpc/json`包，就是一套实现了`rpc.ClientCodec`和`rpc.ServerCodec`接口的`JSON-RPC`模块。
