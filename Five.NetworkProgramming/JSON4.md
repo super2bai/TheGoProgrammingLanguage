@@ -187,3 +187,38 @@ bk, ok := bookInterface.(map[string]interface{})
 
 ```
 虽然有些繁琐，但的确是一种解码未知结构的JSON数据的安全方式。
+
+
+#### 5.4.4
+Go内建的`encoding/json`包还提供 `Decoder`和`Encoder`两个类型，用于支持JSON数据的流式读写，并提供`NewDecoder()`和`NewEncoder()`两个函数来便于具体实现
+```go
+package main
+
+import (
+	"encoding/json"
+	"log"
+	"os"
+)
+
+func main() {
+	dec := json.NewDecoder(os.Stdin)
+	enc := json.NewEncoder(os.Stdout)
+	for {
+		var v map[string]interface{}
+		if err := dec.Decode(&v); err != nil {
+			log.Panicln(err)
+			return
+		}
+		for k := range v {
+			if k != "Title" {
+				delete(v, k)
+			}
+		}
+		if err := enc.Encode(&v); err != nil {
+			log.Panicln(err)
+		}
+
+	}
+}
+```
+使用`Decoder`和`Encoder`对数据流进行处理可以应用得更为广泛些，比如读写`HTTP`连接、`WebSocket`或文件等，Go的标准库`net/rpc/jsonrpc`就是一个应用了`Decoder`和`Encoder`的实际例子。
