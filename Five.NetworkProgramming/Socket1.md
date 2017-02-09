@@ -60,7 +60,7 @@ conn, err := net.Dial("ip4:1","10.0.0.3")
 
 例子：使用`ICMP`协议向在线的主机发送一个问候，并等待主机返回。
 
-[ICMP示例程序](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/code/icmptest.go)
+[ICMP示例程序](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/code/ChapterFive/5.1.2ICMP/icmptest.go)
 
 用法：
 ```bash
@@ -79,7 +79,7 @@ Custom data matches
 #### 5.1.3 TCP示例程序
 
 例子：建立`TCP`链接来实现初步的HTTP协议，通过向网络主机发送HTTP Head请求，读取网络主机返回的信息。
-[TCP示例程序](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/code/simplehttp.go)
+[simplehttp](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/code/ChapterFive/5.1.3TCP/simplehttp.go)
 
 用法：
 ```bash
@@ -108,7 +108,7 @@ func DialUDP(net string, laddr, raddr *UDPAddr) (*UDPConn, error)
 func DialIP(netProto string, laddr, raddr *IPAddr) (*IPConn, error) 
 func DialUnix(net string, laddr, raddr *UnixAddr) (*UnixConn, error) 
 ```
-之前基于TCP发送HTTP请求，读取服务器返回的HTTP head的整个流程也可以使用[simplehttp2](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/code/simplehttp2.go)
+之前基于TCP发送HTTP请求，读取服务器返回的HTTP head的整个流程也可以使用[simplehttp2](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/code/ChapterFive/5.1.3TCP/simplehttp2.go)
 
 `net.ResolveTCPAddr()`用于解析地址和端口号
 `net.DialTCP()`用于建立链接

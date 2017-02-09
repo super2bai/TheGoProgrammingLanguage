@@ -30,7 +30,7 @@ RPC服务端可以通过调用`rpc.ServeConn`处理单个连接请求。多数�
 无论是调用RPC客户端的`Call()`或者是`Go()`方法，都必须指定要调用的服务及其方法名称，以及一个客户端传入参数的引用，还有一个用于接收处理结果参数的指针。
 
 如果没有明确指定RPC传输过程中使用何种编码解码器，默认将使用Go标准库提供的`encoding/gob`包进行数据传输。
-[RPC服务端和客户端交互的示例程序](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/code/rpcserver.go)
+[RPC服务端和客户端交互的示例程序](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/code/ChapterFive/5.3.1RPC/rpcserver.go)
 
 #### 5.3.2 Gob简介
 >Gob是Go的一个**序列化数据结构的编码解码工具**，在Go标准库中内置`encoding/gob`包以供使用。一个数据结构使用Gob进行序列化之后，能够用于网络传输。与JSON或XML这种基于文本描述的数据交换语言不通，Gob是二进制编码的数据流，并且Gob流是可以自解释的，它在保证高效率的同时，也具备完整的表达能力。

@@ -7,7 +7,7 @@ Go语言标准库内建提供了`net/http`包，涵盖了HTTP客户端和服务�
 * [了解HTTP基础知识](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol)
 * [了解Go语言中接口的用法](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/Three.ObjectOrientedProgramming/Interface5.md)
 
-####5.2.1 HTTP客户端
+#### 5.2.1 HTTP客户端
 
 Go内置的`net/http`包提供了最简洁的HTTP客户端实现，无需借助第三方网络通信库(比如`libcurl`)就可以直接使用HTTP中用得最多的`GET`和`POST`方式请求数据。
 
@@ -325,7 +325,7 @@ type RoundTripper interface {
 
 `http.ToundTripper`接口只定义了一个名为`RoundTrip`的方法。任何实现了`RoundTrip()`方法的类型即可实现`http.RoundTripper`接口。前面我们看到的`http.Transport`类型正是实现了`RoundTrip()`方法继而实现了该接口。
 
-通常，我们可以在默认的`http.Transport`之上包一层`Transport`并实现`RoundTrip()`方法，[例子customtrans.go](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/code/customtrans.go )
+通常，我们可以在默认的`http.Transport`之上包一层`Transport`并实现`RoundTrip()`方法，[例子customtrans.go](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/code/ChapterFive/5.2.1HTTPClient/customtrans.go)
 
 因为实现了`http.RoundTripper`接口的代码通常需要在多个goroutine中并发执行，因此我们必须确保实现代码的线程安全性。
 
