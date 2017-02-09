@@ -8,7 +8,8 @@ import (
 	"net/http"
 	"os"
 	"path"
-	"runtime/debug"
+
+	"fmt"
 )
 
 /*
@@ -42,21 +43,36 @@ init()会在main()函数之前执行
 template.Must确保了模版不能解析成功时，一定会出发错误处理流程。
 之所以这么作，是因为倘若模版不能成功加载，程序能做的唯一有一一的事情就是退出
 */
+
 func init() {
+	var fileInfoArr = []os.FileInfo{}
 	fileInfoArr, err := ioutil.ReadDir(TEMPLATE_DIR)
+
 	check(err)
 	var templateName, templatePath string
 	for _, fileInfo := range fileInfoArr {
 		templateName = fileInfo.Name()
-		if ext := path.Ext(templateName); ext != ".html" {
+		fmt.Println("templateName=" + templateName)
+		ext := path.Ext(templateName)
+		fmt.Println("ext=" + ext)
+		if ext != ".html" {
+
+			fmt.Println("wrong : != html" + ext)
 			continue
+		} else {
+			fmt.Println("ext=" + ext)
 		}
+
+		fmt.Println(TEMPLATE_DIR)
 		templatePath = TEMPLATE_DIR + "/" + templateName
-		log.Println("Loading template:", templatePath)
+
+		fmt.Println("Loading template:", templatePath)
 		//template.ParseFiles()会读取指定模版的内容并返回一个*template.Template值
 		t := template.Must(template.ParseFiles(templatePath))
 		templates[templateName] = t
+		fmt.Println(templates)
 	}
+
 }
 
 /**
@@ -104,6 +120,7 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 	即输出一个HTTP上传表单。
 	如果我们使用浏览器访问这个地址，那么网页上将会一个可以上传文件的表单
 	*/
+
 	if r.Method == "GET" {
 		renderHtml(w, "upload", nil)
 	}
@@ -189,7 +206,6 @@ Go支持闭包。闭包可以是一个函数里返回的另一个匿名函数，
 
 接收一个业务逻辑处理函数作为参数，同时调用这个业务逻辑处理函数
 
-
 HandlerFunc有两个参数：httpResponseWriter和*htt.Request
 函数规格同photoweb的业务逻辑处理函数完全一致
 事实上，正式要把业务逻辑处理函数作为参数传入到safeHandler()方法中
@@ -212,8 +228,8 @@ func safeHandler(fn http.HandlerFunc) http.HandlerFunc {
 				// renderHtml(w, "error", e.Error())
 
 				// logging
-				log.Println("WARN: panic fired in %v.panic - %v", fn, e)
-				log.Println(string(debug.Stack()))
+				log.Println("WARN: panic fired in %v .panic - %v", fn, e)
+
 			}
 		}()
 		fn(w, r)
@@ -253,10 +269,11 @@ func main() {
 	mux := http.NewServeMux()
 	staticDirHandler(mux, "/assets/", "./public", 0)
 	mux.HandleFunc("/", safeHandler(listHandler))
+	mux.HandleFunc("/list", safeHandler(listHandler))
 	mux.HandleFunc("/view", safeHandler(viewHandler))
 	mux.HandleFunc("/upload", safeHandler(uploadHandler))
-	err := http.ListenAndServe(":8080", mux)
+	err := http.ListenAndServe(":9080", mux)
 	if err != nil {
-		log.Fatal("ListenAndServe: ", err.Error())
+		fmt.Println("ListenAndServe: ", err.Error())
 	}
 }
