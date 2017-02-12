@@ -7,7 +7,7 @@
 
 **环境**：
 
-[MAC](http://www.apple.com/cn/mac/)
+[MAC](http://www.apple.com/cn/mac)
 
 [LiteIDE源码](https://github.com/visualfc/liteide)
 
