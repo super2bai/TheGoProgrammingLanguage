@@ -63,7 +63,10 @@ func YourLoadX509KeyPair(certFile string, keyFile string) (cert tls.Certificate,
 	}
 
 	certDERBlockChain, _ := pem.Decode(restPEMBlock)
+
 	if certDERBlockChain == nil {
+		cert.Certificate = [][]byte{certDERBlock.Bytes}
+	} else {
 		cert.Certificate = [][]byte{certDERBlock.Bytes, certDERBlockChain.Bytes}
 	}
 
@@ -98,9 +101,8 @@ func YourLoadX509KeyPair(certFile string, keyFile string) (cert tls.Certificate,
 }
 
 func main() {
-	http.HandleFunc(fmt.Sprintf("%s:%d/", SERVER_DOMAIN,
-		SERVER_PORT), rootHandler)
+	http.HandleFunc("/", rootHandler)
 	YourListenAndServeTLS(fmt.Sprintf(":%d", SERVER_PORT),
-		"rui.crt", "rui.key", nil)
+		"../../cert/cert.pem", "../../cert/key.pem", nil)
 
 }

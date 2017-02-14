@@ -42,3 +42,7 @@ Go语言目前实现了`TLS`协议的部分功能，已经可以提供最基础�
 [示例代码https.go](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/code/ChapterSix/6.6EncryptedCommunication/https.go)
 
 [示例代码https2.go](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/code/ChapterSix/6.6EncryptedCommunication/https2.go)
+
+#### 6.6.3 支持HTTPS的文件服务器
+利用Go语言标准库中提供的完备封装，也可以很容易实现一个支持HTTPS的文件服务器，
+[示例代码httpsfile.go]()
