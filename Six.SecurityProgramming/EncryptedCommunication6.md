@@ -45,4 +45,24 @@ Go语言目前实现了`TLS`协议的部分功能，已经可以提供最基础�
 
 #### 6.6.3 支持HTTPS的文件服务器
 利用Go语言标准库中提供的完备封装，也可以很容易实现一个支持HTTPS的文件服务器，
-[示例代码httpsfile.go]()
+[示例代码httpsfile.go](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/code/ChapterSix/6.6EncryptedCommunication/httpsfile.go)
+
+#### 6.6.4 基于SSL/TLS的ECHO程序
+在本章的最后，用一个完整的安全版ECHO程序来演示如何让Socket通信也支持HTTPS.
+当然，ECHO程序支持HTTPS似乎没什么必要，但这个程序可以比较容易的改造成有实际价值的程序,
+比如安全的聊天工具等.
+下面首先实现这个超级ECHO程序的服务器端，[示例代码echoserver.go](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/code/ChapterSix/6.6EncryptedCommunication/echoserver.go)
+再实现这个超级ECHO程序的客户端，[示例代码echoclient.go](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/code/ChapterSix/6.6EncryptedCommunication/echoclient.go)
+
+需要注意的是，`SSL/TLS`协议只能运行于`TCP`之上，不能在`UDP`上工作，且`SSL/TLS`位于`TCP`与应用层协议之间,
+因此所有基于`TCP`的应用层协议都可以透明的使用`SSL/TLS`为自己提供安全保障.
+所谓透明的使用是指既不需要了解细节，也不需要专门处理该层的包，比如封装、解封等。
+
+#### 6.7 小结
+本章该要介绍了网络安全应用领域的相关知识点，以及GO语言对网络安全应用的全面支持,
+同时还提供了具有一定使用价值的示例，让读者可以更加具体的理解相关的知识，并能基于
+这些示例快速写出实用的程序。Go语言标准库的网络和加解密等相关的包在设计上都做了
+一定程度的抽象，以大幅度提高易用性，提高开发效率。
+
+因为本书的重点在于介绍Go语言的相关知识，所以对安全相关的知识就不做非常深入的诠释了，只是点到为止。
+如果读者对安全编程有兴趣，可自行阅读网络安全的图书。

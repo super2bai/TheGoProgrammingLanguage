@@ -47,6 +47,7 @@ func YourListenAndServeTLS(addr string, certFile string, keyFile string, handler
 	if err != nil {
 		return err
 	}
+	http.lis
 	tlsListener := tls.NewListener(conn, config)
 	return http.Serve(tlsListener, handler)
 }
@@ -102,6 +103,7 @@ func YourLoadX509KeyPair(certFile string, keyFile string) (cert tls.Certificate,
 
 func main() {
 	http.HandleFunc("/", rootHandler)
+
 	YourListenAndServeTLS(fmt.Sprintf(":%d", SERVER_PORT),
 		"../../cert/cert.pem", "../../cert/key.pem", nil)
 
