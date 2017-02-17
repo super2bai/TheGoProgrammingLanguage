@@ -10,6 +10,10 @@ import (
 )
 
 /*
+先运行server
+再运行client
+生成pem需要修改/etc/ssl/openssl.cnf
+对应配置已上传
 $ go build echoserver.go
 $ go run echoserver.go
 
