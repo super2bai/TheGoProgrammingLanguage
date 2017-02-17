@@ -57,3 +57,54 @@ To run gofmt with specific options, run gofmt itself.
 
 See also: go fix, go vet.
 ```
+
+可以看出，用法非常简单。接下来试验一下它的格式化效果。
+先看看故意制造的比较丑陋的代码
+```go
+package main
+
+import "fmt"
+func Foo(a, b int) (ret int, err error) {
+if a > b {
+return a,nil
+	} else {
+return b,nil
+	}
+return 0, nil
+}
+
+func 
+main(){i,_:=Foo(1,2)
+fmt.Println("Hello, 世界",i)}
+```
+由于IDE保存文件就会自动格式化，未能提供文件。
+这段代码能够正常编译，也能正常运行，只不过丑陋的代码让人看不下去。现在我们用**Gotool**中的格式化功能美化一下(假设上述代码被保存为hello.go)
+```bash
+$ go fmt hello.go
+hello.go
+```
+执行这个命令后，将会更新到`hello1.go`文件，此时再打开`hello1.go`看一下旧貌换新的代码
+```go
+func Foo(a, b int) (ret int, err error) {
+	if a > b {
+		return a, nil
+	} else {
+		return b, nil
+	}
+	return 0, nil
+}
+
+func main() {
+	i, _ := Foo(1, 2)
+	fmt.Println("Hello, 世界", i)
+}
+```
+可以看到，格式化工具做了很多事情
+* 调整了每条语句的位置
+* 重新摆放花括号的位置
+* 用制表符缩紧代码
+* 添加空格
+
+当然，格式化工具不知道怎么帮你改进命名，这就不要苛求了。
+这个工具并非只能一次格式化一个文件，比如不带任何参数直接运行`go fmt`的话，就可以直接格式化当前目录下的所有`*.go`文件，或者也可以指定一个`GOPATH`中可以找到的报名。
+只不过我们并不是非常推荐使用这个工具。毕竟，保持良好的编码风格应该是一开始写代码时就注意到的。第一次就写成符合规范的样子，以后也就不用再考虑如何美化的问题了。
