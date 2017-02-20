@@ -54,7 +54,8 @@ BUG: #2 : An issue assigned to another person.
 ```bash
 godoc -http=:6060 -goroot="."
 ```
-然后再访问http://localhost:6060/,单机顶部的`foo.go`，或者直接访问http://localhost:6060/pkg/foo/,就可以看到注释提取的效果。
+然后再访问http://localhost:6060/,点击顶部的`foo.go`，或者直接访问http://localhost:6060/pkg/foo/,就可以看到注释提取的效果。
+端口可以切换为其他未被占用的端口号。
 
 若要将注释提取为文档，要遵守如下的基本规则：
 * 注释需要紧贴在对应的包声明和函数之前，能不有空行
