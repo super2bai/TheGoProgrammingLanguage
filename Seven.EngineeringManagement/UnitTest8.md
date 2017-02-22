@@ -2,8 +2,8 @@
 Go本身提供了一套轻量级的测试框架。符合规则的测试代码会在运行测试时被自动识别并执行。单元测试源文件的命名规则如下：**在需要测试的包下面创建以"_test"结尾的go文件，形如[^.]*_test.go**。
 
 Go的单元测试函数分为两类：
-* 功能测试函数Test*(t *testing.T)
-* 性能测试函数Benchmark*(t *testing.T)
+* 功能测试函数`Test*(t *testing.T)`
+* 性能测试函数`Benchmark*(t *testing.T)`
 ```go
 func TestAdd(t *testing.T) 
 func BenchmarkAdd(t *testing.T) {
