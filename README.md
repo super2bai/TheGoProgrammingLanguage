@@ -39,11 +39,11 @@
 		* 1.3.3 编译程序
     * [1.4 开发工具的选择](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/One.LearnGoLanguage/ChooseTools4.md)
     * [1.5工程管理](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/One.LearnGoLanguage/EngineeringManagement5.md)
-    * [1.6 问题追踪和调试](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/One.LearnGoLanguage/
+    * [1.6 问题追踪和调试](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/One.LearnGoLanguage/ProblemTrackingAndDebugging6.md)
 		* 1.6.1 打印日志
 		* 1.6.2 GDB调试
-    * [1.7 如何寻求帮助](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/One.LearnGoLanguage/
+    * [1.7 如何寻求帮助](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/One.LearnGoLanguage/AskForHelp7.md)
 	    * 1.7.1 邮件列表
 	    * 1.7.2 网站资源
-	* [1.8 小结](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/One.LearnGoLanguage/
+	* [1.8 小结](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/One.LearnGoLanguage/Summary8.md)
 		
