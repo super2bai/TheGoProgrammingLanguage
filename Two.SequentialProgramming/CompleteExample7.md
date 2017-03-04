@@ -1,1 +1,1 @@
-完整示例文件在TheGoProgrammingLanguage/code/sorter
+[sorter完整示例](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/code/ChapterTwo/sorter)
