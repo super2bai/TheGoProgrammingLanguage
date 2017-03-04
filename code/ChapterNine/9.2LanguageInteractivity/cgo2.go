@@ -13,7 +13,5 @@ func Hello() {
 }
 
 func main() {
-
 	Hello()
-
 }
