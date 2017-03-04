@@ -119,9 +119,9 @@ p.tbl-&gt;Speak(p.data)
 ```
 可以看到，这种明确的可以在编译器确定的工作，就没必要到运行期进行动态的类型查询和转换。
 
-为了让读者能够比较完整地理解这个过程，在这里再提供了一份完整可执行的代码，供读者运行并观察运行效果。
-[Go语言版本](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/code/ChapterNine/9.5InterfaceMechanism/interface-2.go)
-[C语言版本](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/code/ChapterNine/9.5InterfaceMechanism/interface-2.c)
+为了让读者能够比较完整地理解这个过程，在这里再提供了一份完整可执行的代码，供读者运行并观察运行效果:
+* [Go语言版本](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/code/ChapterNine/9.5InterfaceMechanism/interface-2.go)
+* [C语言版本](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/code/ChapterNine/9.5InterfaceMechanism/interface-2.c)
 
 #### 9.5.2 接口查询
 接口查询是一个在软件开发中非常常见的使用场景，比如一个拿着`IReader`接口的开发者，在某些时候会需要知道`IReader`所对应的类型是否也实现了`IReadWriter`接口，这样它可以切换到`IReadWriter`接口，然后调用该接口的Write()`方法写入数据。
