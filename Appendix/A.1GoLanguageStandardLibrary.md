@@ -156,7 +156,8 @@ image| color| 实现了一个基本的颜色库
 image| draw| 提供一些做图函数
 image| gif| 实现了一个GIF图像解码器 
 image|jpeg| 实现了一个JPEG图像解码器和编码器 
-image|png| 实现了一个PNG图像解码器和编码器 index|suffixarray|通过构建内存索引实现的高速字符串匹配查找算法
+image|png| 实现了一个PNG图像解码器和编码器 
+index|suffixarray|通过构建内存索引实现的高速字符串匹配查找算法
 io| ioutil| 实现了一些实用的I/O函数
 log| syslog| 提供了对系统日志服务的简单接口 
 Math|big|实现了多精度的算术运算（大数）
