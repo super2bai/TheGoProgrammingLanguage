@@ -158,5 +158,17 @@
 		* 5.5.1 最简单的网站程序
 		* 5.5.2 net/http包简介
 		* 5.5.3 开发一个简单的相册网站
-	* [5.6 小结](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Five.NetworkProgramming/Summary6.md)		
+	* [5.6 小结](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Five.NetworkProgramming/Summary6.md)	
+* [第六章 安全编程](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Six.SecurityProgramming/)
+	* [6.1 数字加密](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Six.SecurityProgramming/DataEncryption1.md)
+	* [6.2 数字签名](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Six.SecurityProgramming/DigitalSignature2.md)
+	* [6.3 数字证书](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Six.SecurityProgramming/DigitalCertificate3.md)
+	* [6.4 PKI体系](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Six.SecurityProgramming/PKISystem4.md)
+	* [6.5 加密通信](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Six.SecurityProgramming/HashFunctionForGo5.md)
+	* [6.6 加密通信](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Six.SecurityProgramming/EncryptedCommunication6.md)
+		* 6.6.1 加密通信流程
+		* 6.6.2 支持HTTPS的Web服务器
+		* 6.6.3 支持HTTPS的文件服务器
+		* 6.6.4 基于SSL/TLS的ECHO程序
+	* [6.7 小结](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Six.SecurityProgramming/Summary7.md)		
 		
