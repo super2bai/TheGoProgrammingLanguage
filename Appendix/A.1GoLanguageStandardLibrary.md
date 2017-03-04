@@ -174,11 +174,13 @@ net|rpc/jsonrpc |为rpc包实现了一个JSON-RPC ClientCodec和ServerCodec
 os| exec| 可运行外部命令
 os| user| 通过名称和id进行用户账户检查
 path| filepath| 实现了以与目标操作系统定义文件路径相兼容的方式处理文件名路径 
-regexp| syntax| 将正则表达式解析为语法树 runtime| debug| 包含当程序在运行时调试其自身的功能 
+regexp| syntax| 将正则表达式解析为语法树
+runtime| debug| 包含当程序在运行时调试其自身的功能 
 runtime|pprof| 以pprof可视化工具需要的格式写运行时性能测试数据
 sync| atomic| 提供了低级的用于实现同步算法的原子级的内存机制 
 testing| iotest| 提供一系列测试目的的类型，实现了Reader和Writer标准接口 
-testing|quick| 实现了用于黑箱测试的实用函数 testing|script| 帮助测试使用通道的代码
+testing|quick| 实现了用于黑箱测试的实用函数
+testing|script| 帮助测试使用通道的代码
 text| scanner |为UTF-8文本提供了一个扫描器和分词器 
 text|tabwriter| 实现了一个写筛选器（tabwriter.Writer），它可将一个输入的tab分割的列 翻译为适当对齐的文本
 text| template| 数据驱动的模板引擎，用于生成类似HTML的文本输出格式 
