@@ -111,5 +111,30 @@
 		* 3.6.3 主程序
 		* 3.6.4 构建运行
 		* 3.6.5 遗留问题
-	* [3.7 小结](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Three.ObjectOrientedProgramming)			
+	* [3.7 小结](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Three.ObjectOrientedProgramming)		
+* [第四章 并发编程](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Four.ConcurrentProgramming)
+	* [4.1 并发基础](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Four.ConcurrentProgramming/ConcurrentBasis1.md)
+	* [4.2 协程](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Four.ConcurrentProgramming/Routine2.md)
+	* [4.3 goroutine](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Four.ConcurrentProgramming/Goroutine3.md)
+	* [4.4 并发通信](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Four.ConcurrentProgramming/ConcurrentCommunication4.md)
+	* [4.5 channel](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Four.ConcurrentProgramming/Channel5.md)
+		* 4.5.1 基本语法
+		* 4.5.2 select
+		* 4.5.3缓冲机制
+		* 4.5.4 超时机制
+		* 4.5.5 channel的传递
+		* 4.5.6 单向channel
+		* 4.5.7 关闭channel
+	* [4.6 多核并行化](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Four.ConcurrentProgramming/Multi-coreParallelization6.md)
+	* [4.7 出让时间片](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Four.ConcurrentProgramming/TransferTime7.md)
+	* [4.8 同步](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Four.ConcurrentProgramming/)
+		* 4.8.1 同步锁
+		* 4.8.2 全局唯一性操作
+	* [4.9 完整示例](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Four.ConcurrentProgramming/Synchronization8.md)
+		* 4.9.1 简单IPC狂减
+		* 4.9.2 中央服务器
+		* 4.9.3 主程序
+		* 4.9.4 运行程序
+	* [4.10 小结](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Four.ConcurrentProgramming/CompleteExample9.md)
+			
 		
