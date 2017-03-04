@@ -12,10 +12,6 @@ func Hello() {
 	C.hello()
 }
 
-/**
-output:
-Random: 677741240
-*/
 func main() {
 
 	Hello()
