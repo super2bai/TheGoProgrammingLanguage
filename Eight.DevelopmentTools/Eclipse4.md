@@ -10,7 +10,7 @@ rpm -e --nodeps java-1.6.0-openjdk-1.6.0.0-1.7.b09.e15
 * 安装Eclipse3.6及以上版本。无论是在Linux还是Windows平台上，一般只需要解压到一个指定的位置即可，不需要特别的配置
 * 安装Go编译器，并配置好`GOROOT`、`GOBIN`等环境变量
 * 打开Eclipse，点击`Help`->`Install New Software`菜单，打开安装软件对话框()Eclipse版本不同，菜单位置和名称可能也略有差异，但是功能没有区别)。
-* 在打开的安装软件对话框的`Work with`文本框中，输入以下URL:https://goclipse.googlecode.com/svn/trunk/goclipse-update-site，并按回车
+* 在打开的安装软件对话框的`Work with`文本框中，输入以下URL:https://goclipse.googlecode.com/svn/trunk/goclipse-update-site ，并按回车
 * 根据Eclipse的提示，单击`Next`按钮即可。此过程需要一定时间的等待， 如果中途出错，可以多次重试，直到成功为止。
 
 在整个过程中，会因为网络不稳定或者操作系统版本的缘故，下载缓慢或者失败，只要重复上述步骤即可。
