@@ -135,6 +135,6 @@
 		* 4.9.2 中央服务器
 		* 4.9.3 主程序
 		* 4.9.4 运行程序
-	* [4.10 小结](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Four.ConcurrentProgramming/CompleteExample9.md)
+	* [4.10 小结](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Four.ConcurrentProgramming/Summary10.md)
 			
 		
