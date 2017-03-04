@@ -1,1 +1,1 @@
-详见：[TheGoProgrammingLanguage/code/cgss](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/code/cgss)
+详见：[TheGoProgrammingLanguage/code/cgss](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/code/ChapterFour/cgss)
