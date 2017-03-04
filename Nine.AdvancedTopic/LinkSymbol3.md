@@ -47,6 +47,6 @@ func (this *ClassType)Method(arg1 argType1, arg2 argType2,...)(ret1 RetType1, re
 * `func (fs MockFS) Foo(bar Bar)`
 
 它们的链接符号分别为：
-* `qbox.us/mockfs.New
+* `qbox.us/mockfs.New`
 * `qbox.us/mockfs.*MockFS.Mkdir`
 * `qbox.us/mockfs.MockFS.Foo`
