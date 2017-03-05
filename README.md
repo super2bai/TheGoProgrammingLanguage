@@ -170,5 +170,58 @@
 		* 6.6.2 支持HTTPS的Web服务器
 		* 6.6.3 支持HTTPS的文件服务器
 		* 6.6.4 基于SSL/TLS的ECHO程序
-	* [6.7 小结](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Six.SecurityProgramming/Summary7.md)		
-		
+	* [6.7 小结](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Six.SecurityProgramming/Summary7.md)	
+* [第七章 工程管理](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Seven.EngineeringManagement)
+	* [7.1 Go命令行工具](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Seven.EngineeringManagement/CommandLineTool1.md)
+	* [7.2 代码风格](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Seven.EngineeringManagement/CodeStyle2.md)
+		* 7.2.1 强制性编码规范
+		* 7.2.2 非强制性编码规范
+	* [7.3 远程import支持](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Seven.EngineeringManagement/RemoteImportSupport3.md)
+	* [7.4 工程组织](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Seven.EngineeringManagement/EngineeringOrganization4.md)
+		* 7.4.1 GOPATH
+		* 7.4.2 目录结构
+	* [7.5 文档管理](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Seven.EngineeringManagement/DocumentManagement5.md)
+	* [7.6 工程构建](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Seven.EngineeringManagement/ConstructionOfTheProject6.md)
+	* [7.7 跨平台开发](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Seven.EngineeringManagement/CrossPlatformDevelopment7.md)
+		* 7.7.1 交叉编译
+		* 7.7.2 Android支持
+	* [7.8 单元测试](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Seven.EngineeringManagement/UnitTest8.md)
+	* [7.9 打包分发](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Seven.EngineeringManagement/PackageDistribution9.md)
+	* [7.10 小结](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Seven.EngineeringManagement/Summary10.md)
+* [第八章 开发工具](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Eight.DevelopmentTools)
+	* [8.1 选择开发工具](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Eight.DevelopmentTools/ChooseDevelopmentTool1.md)
+	* [8.2 gedit](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Eight.DevelopmentTools/Gedit2.md)
+		* 8.2.1 语法高亮
+		* 8.2.2 编译环境
+	* [8.3 Vim](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Eight.DevelopmentTools/Vim3.md)
+	* [8.4 Eclipse](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Eight.DevelopmentTools/Eclipse4.md)
+	* [8.5 Notepad++](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Eight.DevelopmentTools/NotePad++5.md)
+		* 8.5.1 语法高亮
+		* 8.5.2 编译环境
+	* [8.6 LiteIDE](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Eight.DevelopmentTools/LiteIDE6.md)
+	* [8.7 小节]	(https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Eight.DevelopmentTools/Summary7.md)
+* [第九章 进阶话题](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Nine.AdvancedTopic)
+	* [9.1 反射](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Nine.AdvancedTopic/Reflection1.md)
+		* 9.1.1 基本概念
+		* 9.1.2 基本用法
+		* 9.1.3 对结构的反射操作
+	* [9.2 语言交互性](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Nine.AdvancedTopic/LanguageInteractivity2.md)
+		* 9.2.1 类型映射
+		* 9.2.2 字符串映射
+		* 9.2.3 C程序
+		* 9.2.4 函数调用
+		* 9.2.5 编译Cgo
+	* [9.3 链接符号](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Nine.AdvancedTopic/LinkSymbol3.md)
+	* [9.4 goroutine 机理](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Nine.AdvancedTopic/GoroutineMechanism4.md)
+		* 9.4.1 协程
+		* 9.4.2 协程的C语言实现
+		* 9.4.3 协程库概述
+		* 9.4.4 任务
+		* 9.4.5 任务调度
+		* 9.4.6 上下文切换
+		* 9.4.7 通信机制
+	* [9.5 接口机理](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/Nine.AdvancedTopic/InterfaceMechanism5.md)
+		* 9.5.1 类型赋值给接口
+		* 9.5.2 接口查询
+		* 9.5.3 接口赋值
+* [附录 A](https://github.com/Lynn--/TheGoProgrammingLanguage/blob/master/Appendix/A.1GoLanguageStandardLibrary.md)
