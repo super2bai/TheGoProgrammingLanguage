@@ -62,4 +62,4 @@ $ touch photoweb.go
 * 能看到所有上传的图片列表
 * 可以删除指定的图片
  
-[示例代码](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/code/photoweb)
+[示例代码](https://github.com/Lynn--/TheGoProgrammingLanguage/tree/master/code/ChapterFive/5.5WebSiteDevelopment/photoweb)
